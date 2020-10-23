@@ -8,7 +8,7 @@ var myApp = new Framework7();
 var $$ = Dom7;
 
 // Add the view
-var mainView = myApp.view.create('.view-main', {
+myApp.view.create('.view-main', {
 
     // enable the dynamic navbar for this view:
     dynamicNavbar: true
@@ -54,11 +54,48 @@ import "https://cdnjs.cloudflare.com/ajax/libs/firebase/7.24.0/firebase-app.js";
 import "https://cdnjs.cloudflare.com/ajax/libs/firebase/7.24.0/firebase-database.js"
 
 
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "Your api key",
+    authDomain: "domain",
+    databaseURL: "url",
+    projectId: "project id",
+    storageBucket: "bucket",
+    messagingSenderId: "sender id",
+    appId: "app id"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
 
 //<!-- TODO: Add SDKs for Firebase products that you want to use
 //     https://firebase.google.com/docs/web/setup#available-libraries -->
 
 $$(".my-sheet").on("submit", (evt) => {
     evt.preventDefault();
-    alert("submit pressed");
+    const waypointID = new Date().toISOString().replace(".", "_");
+    const oNote = $$("#theNote");
+    // evt is a closure
+    firebase.database().ref('waypoints/' + waypointID).set({
+        lat: $$("#lat").html(),
+        lng: $$("#lng").html(),
+        note: oNote.val()
+    }).then(() => {
+        oNote.val("");
+        myApp.sheet.close(".my-sheet", true);
+    }).catch(e => {
+        console.log(e.toString());
+    });
 });
+
+firebase.database().ref('waypoints/').on("value", snapshot => {
+    let oWaypoints = snapshot.val();
+    console.log(oWaypoints);
+    Object.keys(oWaypoints).map((key) => {
+        let oWaypoint = oWaypoints[key];
+        let marker = L.marker([oWaypoint.lat, oWaypoint.lng]).addTo(myMap);
+        marker.bindPopup(oWaypoint.note).openPopup();
+    });
+});
+
