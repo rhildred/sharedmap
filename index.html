@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width = device-width, initial-scale = 1, 
+         maximum-scale = 1, minimum-scale = 1, user-scalable = no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>My App</title>
+    <!--link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/framework7/5.7.12/css/framework7.bundle.min.css" / -->
+    <link rel="stylesheet" href="css/index.css" />
+</head>
+
+<body>
+    <div class="page-content view-main">
+        <div class="appbar">
+            <div class="appbar-inner">
+              <!-- ... Appbar content -->
+              <h1>Leaflet Way-point App</h1>
+            </div>
+          </div>
+          <div id="mapid"></div>
+          			<!-- Default bottom sheet -->
+				<form class="sheet-modal my-sheet">
+					<div class="toolbar">
+						<div class="toolbar-inner block">
+							<div class="left">Latitude: <span id="lat">0</span>
+								&nbsp;Longitude: <span id="lng">0</span></div>
+							<p id="closeSave" class="segmented segmented-raised">
+								<a href="#" class="button sheet-close">Close
+								</a>
+								<button type="submit"class="button button-active">Save</button>
+							</p>
+						</div>
+					</div>
+					<div class="sheet-modal-inner">
+						<div class="block">
+							<h4><label for="theNote">Note</label></h4>
+							<textarea id="theNote" placeholder="enter note here"></textarea>
+						</div>
+					</div>
+				</form>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js"></script>
+    <script src="js/index.js" type="module"></script>
+
+</body>
